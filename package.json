@@ -1,0 +1,15 @@
+"build": {
+  "appId": "com.textword.iterator",
+  "productName": "Text Word Iterator",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "dist",
+    "electron.js",
+    "package.json"
+  ],
+  "win": {
+    "target": "nsis"
+  }
+}
