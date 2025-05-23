@@ -7,9 +7,9 @@ const WordIterator = () => {
   const [words, setWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [speed, setSpeed] = useState(100);
+  const [speed, setSpeed] = useState(150);
   const [charThreshold, setCharThreshold] = useState(10);
-  const [charOffset, setCharOffset] = useState(50);
+  const [charOffset, setCharOffset] = useState(100);
   const [periodOffset, setPeriodOffset] = useState(100);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
