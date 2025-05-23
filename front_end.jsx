@@ -7,6 +7,7 @@ const WordIterator = () => {
   const [words, setWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [speed, setSpeed] = useState(100);
   const [charThreshold, setCharThreshold] = useState(7);
   const [charOffset, setCharOffset] = useState(100);
@@ -14,7 +15,7 @@ const WordIterator = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (isRunning && words.length > 0 && currentWordIndex < words.length) {
+    if (isRunning && !isPaused && words.length > 0 && currentWordIndex < words.length) {
       let delay = speed;
       const currentWord = words[currentWordIndex];
 
@@ -43,18 +44,24 @@ const WordIterator = () => {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [isRunning, words, currentWordIndex, speed, charThreshold, charOffset, periodOffset]);
+  }, [isRunning, isPaused, words, currentWordIndex, speed, charThreshold, charOffset, periodOffset]);
 
   const handleStart = () => {
     if (inputText.trim()) {
       setWords(inputText.trim().split(/\s+/));
       setCurrentWordIndex(0);
+      setIsPaused(false);
       setIsRunning(true);
     }
   };
 
   const handleStop = () => {
     setIsRunning(false);
+    setIsPaused(false);
+  };
+
+  const handlePause = () => {
+    setIsPaused((prev) => !prev);
   };
 
   return (
@@ -103,6 +110,9 @@ const WordIterator = () => {
       <div className="flex space-x-4">
         <Button onClick={handleStart} disabled={isRunning}>
           Start
+        </Button>
+        <Button onClick={handlePause} disabled={!isRunning}>
+          {isPaused ? "Resume" : "Pause"}
         </Button>
         <Button onClick={handleStop} disabled={!isRunning}>
           Stop
