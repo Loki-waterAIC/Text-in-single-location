@@ -7,8 +7,8 @@ const WordIterator = () => {
   const [words, setWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [speed, setSpeed] = useState(150);
-  const [charThreshold, setCharThreshold] = useState(10);
+  const [speed, setSpeed] = useState(100);
+  const [charThreshold, setCharThreshold] = useState(7);
   const [charOffset, setCharOffset] = useState(100);
   const [periodOffset, setPeriodOffset] = useState(100);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -18,8 +18,12 @@ const WordIterator = () => {
       let delay = speed;
       const currentWord = words[currentWordIndex];
 
-      if (currentWord.endsWith(".")) {
-        delay += periodOffset;
+      if (currentWord.includes(".")) {
+        const periodCount = (currentWord.match(/\./g) || []).length;
+        const isOnlyPeriods = /^\.+$/.test(currentWord);
+        if (!isOnlyPeriods) {
+          delay += periodOffset * periodCount;
+        }
       }
 
       const extraDelay = Math.floor(currentWord.length / charThreshold) * charOffset;
