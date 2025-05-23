@@ -56,16 +56,16 @@ const WordIterator = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-6">
       <div className="w-full max-w-lg space-y-2">
-        <label>Input Text</label>
-        <Input
-          type="text"
+        <label className="block text-lg font-medium">Input Text</label>
+        <textarea
+          className="w-full h-32 p-2 border rounded resize-none text-base"
           placeholder="Drop your text here..."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
       </div>
       <div className="w-full max-w-lg space-y-2">
-        <label>Base Speed (ms)</label>
+        <label className="block text-lg font-medium">Base Speed (ms)</label>
         <Input
           type="number"
           value={speed}
@@ -73,7 +73,7 @@ const WordIterator = () => {
         />
       </div>
       <div className="w-full max-w-lg space-y-2">
-        <label>Characters per Offset</label>
+        <label className="block text-lg font-medium">Characters per Offset</label>
         <Input
           type="number"
           value={charThreshold}
@@ -81,7 +81,7 @@ const WordIterator = () => {
         />
       </div>
       <div className="w-full max-w-lg space-y-2">
-        <label>Offset per Threshold (ms)</label>
+        <label className="block text-lg font-medium">Offset per Threshold (ms)</label>
         <Input
           type="number"
           value={charOffset}
@@ -89,7 +89,7 @@ const WordIterator = () => {
         />
       </div>
       <div className="w-full max-w-lg space-y-2">
-        <label>Period Offset (ms)</label>
+        <label className="block text-lg font-medium">Period Offset (ms)</label>
         <Input
           type="number"
           value={periodOffset}
