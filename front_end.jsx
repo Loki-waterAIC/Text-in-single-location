@@ -8,10 +8,10 @@ const WordIterator = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [speed, setSpeed] = useState(100);
+  const [speed, setSpeed] = useState(120);
   const [charThreshold, setCharThreshold] = useState(7);
-  const [charOffset, setCharOffset] = useState(100);
-  const [periodOffset, setPeriodOffset] = useState(100);
+  const [charOffset, setCharOffset] = useState(150);
+  const [periodOffset, setPeriodOffset] = useState(150);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -19,12 +19,10 @@ const WordIterator = () => {
       let delay = speed;
       const currentWord = words[currentWordIndex];
 
-      if (currentWord.includes(".")) {
-        const periodCount = (currentWord.match(/\./g) || []).length;
-        const isOnlyPeriods = /^\.+$/.test(currentWord);
-        if (!isOnlyPeriods) {
-          delay += periodOffset * periodCount;
-        }
+      const isOnlyPeriods = /^\.+$/.test(currentWord);
+      if (!isOnlyPeriods) {
+        const nonAlphaCount = (currentWord.match(/[^a-zA-Z]/g) || []).length;
+        delay += periodOffset * nonAlphaCount;
       }
 
       const extraDelay = Math.floor(currentWord.length / charThreshold) * charOffset;
@@ -100,7 +98,7 @@ const WordIterator = () => {
         />
       </div>
       <div className="w-full max-w-lg space-y-2">
-        <label className="block text-lg font-medium">Period Offset (ms)</label>
+        <label className="block text-lg font-medium">Non Alphabet character Offset (ms)</label>
         <Input
           type="number"
           value={periodOffset}
